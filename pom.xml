@@ -3,10 +3,14 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>de.schauderhaft</groupId>
-    <artifactId>talk-parent-mvn</artifactId>
+    <artifactId>talk-jpa-100</artifactId>
     <version>1.0.0-SNAPSHOT</version>
-    <name>Parent project for talks done by Jens Schauder</name>
-    <description>Parent project for talks done by Jens Schauder
+    <name>Spring Data JPA from 0-100 in 60 minutes. by Jens Schauder</name>
+    <description>
+      Slides for the talk "Spring Data JPA from 0-100 in 60 minutes." by Jens Schauder
+
+      It starts from introducing JPA explaining the main concepts.
+      It then continues to introduce Spring Data JPA focusing on basic features and the division of responsibilities between the two.
     </description>
 
     <properties>
