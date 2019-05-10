@@ -8,8 +8,104 @@
 
 include::footer.ad[]
 
-== section title
+== Back in the days
 
-=== Quote
+when photos where black and white or at least had a sever orange hue.
+
+Removing the back pedaling break from your bike.
+
+Not a smart move ... but learned something.
+
+Developers do the same thing with JPA:
+
+They work with stuff they don't really understand.
+
+and 3 or 6 months into the project they realize they don't know where the breaks are.
+
+=== Lets not worry about breaks.
+
+Basic example:
+
+- create entity
+- configure persistence context
+- save entity
+
+Cool: schema generated
+no SQL written
+
+=== Pitfall: Using generated DLL
+
+Don't use it in production
+ - no proper names for FKs and Indexes
+ - no control over schema migration.
+
+Use a proper tool for this kind of thing
+ - Flyway
+ - Liquibase
+
+Don't use it in tests.
+
+- you don't want your integration tests run against a different schema then production.
+
+=== Let's write an integration test
+
+=== Pitfall: Understand when data is written to the database
+
+=== Let's read some data
+
+=== Pitfall: Beware of lazy loading
+
+== Spring Data JPA
+
+=== JPA does the mapping
+
+[NOTE.speaker]
+====
+Lazy/Eager loading
+
+Cascading
+
+...
+
+SQL generation
+====
+
+=== What does Spring Data JPA do?
+
+=== CRUD Methods
+
+[NOTE.speaker]
+====
+Remember the save is a lie
+====
+
+=== Query derivation
+
+[NOTE.speaker]
+====
+If it is really hard to find the wrong name, it is the wrong tool.
+====
+
+=== Pagination
+
+=== Query by example
+
+=== Annotated queries
+
+=== SpEL expressions
+
+=== Custom methods
+
+== What if something doesn't work?
+
+=== Ask the right community
+
+[NOTE.speaker]
+====
+We talk to each other,
+but it doesn't help if I have to analyze a bug for 2hrs just to instruct you to raise an issue with Hibernate.
+Or the other way round.
+====
+
 
 include::self.ad[]
