@@ -18,7 +18,7 @@ public class JpaApplicationTests {
 	EntityManager em;
 
 	@Test
-	public void contextLoads() {
+	public void saving() {
 
 		Person p = new Person(
 				"Jens",
@@ -29,5 +29,21 @@ public class JpaApplicationTests {
 		em.persist(p);
 
 	}
+
+
+	@Test
+	public void savingForReal() {
+
+		Person p = new Person(
+				"Jens",
+				new Address("38116", "Braunschweig", "Germany"),
+				Gender.MALE
+		);
+
+		em.persist(p);
+		em.flush();
+
+	}
+
 
 }
