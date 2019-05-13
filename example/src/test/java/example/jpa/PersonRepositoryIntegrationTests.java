@@ -22,6 +22,9 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
+import static example.jpa.PersonTestUtil.*;
+import static org.assertj.core.api.Assertions.*;
+
 /**
  * @author Jens Schauder
  */
@@ -35,7 +38,37 @@ public class PersonRepositoryIntegrationTests {
 
 
 	@Test
-	public void test() {
+	public void crud() {
+
+		Person p = persons.save(createPerson());
+
+		assertThat(persons.findAll())
+				.containsExactly(p);
+
+		persons.deleteAll();
+
+
+		assertThat(persons.findAll())
+				.hasSize(0);
+
+	}
+
+	@Test
+	public void derivedQueriesSimple() {
+
+		Person p = persons.save(createPerson());
+
+		assertThat(persons.findByFirstName("Jens"))
+				.containsExactly(p);
+
+	}
+	@Test
+	public void derivedQueriesInvolved() {
+
+		Person p = persons.save(createPerson());
+
+		assertThat(persons.existsByAddress_CityContainsIgnoreCase("nschw"))
+				.isTrue();
 
 	}
 }

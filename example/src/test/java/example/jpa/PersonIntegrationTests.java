@@ -5,7 +5,6 @@ import org.hibernate.LazyInitializationException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -72,7 +71,7 @@ public class PersonIntegrationTests {
 
 		assertThatExceptionOfType(LazyInitializationException.class)
 				.isThrownBy(
-						() -> person.getHobies().forEach(System.out::println)
+						() -> person.getHobbies().forEach(System.out::println)
 				);
 	}
 

@@ -43,7 +43,7 @@ public class Person {
 		this.firstName = firstName;
 		this.address = address;
 		this.gender = gender;
-		this.hobies.addAll(hobbies);
+		this.hobbies.addAll(hobbies);
 	}
 
 	@Id
@@ -58,7 +58,7 @@ public class Person {
 	Address address;
 
 	@ManyToMany(cascade = CascadeType.ALL)
-	Set<Hobby> hobies = new HashSet<>();
+	Set<Hobby> hobbies = new HashSet<>();
 
 	Gender gender;
 }
