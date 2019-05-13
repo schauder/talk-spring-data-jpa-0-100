@@ -49,8 +49,10 @@ public class JpaApplicationTests {
 
 		assertPersonCount().isEqualTo(1);
 
+		// Flush has the same effect as a query.
 		// em.flush();
 
+		// JPA guarantees that within a single session/transaction every instance is only loaded once.
 		assertThat(p)
 				.isSameAs(reloaded)
 				.isSameAs(reloadedAgain);
