@@ -1,6 +1,7 @@
 package example.jpa;
 
 import org.assertj.core.api.AbstractIntegerAssert;
+import org.hibernate.LazyInitializationException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,11 +12,15 @@ import org.springframework.test.context.junit4.SpringRunner;
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 
+import static java.util.Arrays.*;
 import static org.assertj.core.api.Assertions.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class JpaApplicationTests {
+public class PersonIntegrationTests {
+
+	@Autowired
+	PersonService personService;
 
 	@Autowired
 	EntityManager em;
@@ -27,11 +32,7 @@ public class JpaApplicationTests {
 	@Transactional
 	public void saving() {
 
-		Person p = new Person(
-				"Jens",
-				new Address("38116", "Braunschweig", "Germany"),
-				Gender.MALE
-		);
+		Person p = createPerson();
 
 		em.persist(p);
 
@@ -57,6 +58,35 @@ public class JpaApplicationTests {
 				.isSameAs(reloaded)
 				.isSameAs(reloadedAgain);
 
+	}
+
+	@Test
+	public void fetching() {
+
+		Long id = personService.savePerson(createPerson());
+
+		Person person = personService.loadPerson(id);
+
+		System.out.println(person.getAddress());
+
+		assertThatExceptionOfType(LazyInitializationException.class)
+				.isThrownBy(
+						() -> person.getHobies().forEach(System.out::println)
+				);
+	}
+
+	private Person createPerson() {
+
+		return
+				new Person(
+						"Jens",
+						new Address("38116", "Braunschweig", "Germany"),
+						Gender.MALE,
+						asList(new Hobby("Running"),
+								new Hobby("Bouldering"),
+								new Hobby("Playing Games")
+						)
+				);
 	}
 
 	private AbstractIntegerAssert<?> assertPersonCount() {

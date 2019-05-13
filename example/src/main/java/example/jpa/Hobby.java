@@ -17,48 +17,28 @@ package example.jpa;
 
 import lombok.Data;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.Version;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  * @author Jens Schauder
  */
-@Data
 @Entity
-public class Person {
+@Data
+public class Hobby {
 
-	Person() { }
+	Hobby(){}
 
-	Person(String firstName, Address address, Gender gender, Collection<Hobby> hobbies) {
+	Hobby(String name) {
 
-		this.firstName = firstName;
-		this.address = address;
-		this.gender = gender;
-		this.hobies.addAll(hobbies);
+		this.name = name;
 	}
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	Long id;
-	@Version
-	Long version;
 
-	String firstName;
-
-	@OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
-	Address address;
-
-	@ManyToMany(cascade = CascadeType.ALL)
-	Set<Hobby> hobies = new HashSet<>();
-
-	Gender gender;
+	String name;
 }

@@ -55,6 +55,8 @@ Don't use it in tests.
 
 === Pitfall: Beware of lazy loading
 
+=== Pitfall: Not everything should be a mapped relationship
+
 == Spring Data JPA
 
 === JPA does the mapping
