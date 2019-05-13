@@ -2,8 +2,8 @@
 :icons: font
 :twitter-tag: @jensschauder
 :conference-tag:
-:talk-tag: #sdJPA100
-:slide-link: http://bit.ly/jsch-comm
+:talk-tag:
+:slide-link:
 :linkattrs:
 
 include::footer.ad[]

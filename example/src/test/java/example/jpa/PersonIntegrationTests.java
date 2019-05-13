@@ -5,6 +5,7 @@ import org.hibernate.LazyInitializationException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -12,7 +13,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 
-import static java.util.Arrays.*;
+import static example.jpa.PersonTestUtil.*;
 import static org.assertj.core.api.Assertions.*;
 
 @RunWith(SpringRunner.class)
@@ -75,21 +76,8 @@ public class PersonIntegrationTests {
 				);
 	}
 
-	private Person createPerson() {
 
-		return
-				new Person(
-						"Jens",
-						new Address("38116", "Braunschweig", "Germany"),
-						Gender.MALE,
-						asList(new Hobby("Running"),
-								new Hobby("Bouldering"),
-								new Hobby("Playing Games")
-						)
-				);
-	}
-
-	private AbstractIntegerAssert<?> assertPersonCount() {
+	AbstractIntegerAssert<?> assertPersonCount() {
 
 		return assertThat(
 				template.queryForObject("SELECT COUNT(*) FROM PERSON", Integer.class)
