@@ -33,7 +33,6 @@ public class PersonIntegrationTests {
 	public void saving() {
 
 		Person p = createPerson();
-
 		em.persist(p);
 
 		Person reloaded = em.find(Person.class, p.getId());
@@ -44,7 +43,8 @@ public class PersonIntegrationTests {
 		assertPersonCount().isEqualTo(0);
 
 		Person reloadedAgain = em
-				.createQuery("SELECT p  FROM Person p WHERE p.id = :id", Person.class)
+				.createQuery("SELECT p  FROM Person p " +
+						"WHERE p.id = :id", Person.class)
 				.setParameter("id", p.getId())
 				.getSingleResult();
 

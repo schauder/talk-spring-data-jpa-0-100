@@ -37,9 +37,14 @@ public class PersonService {
 		return person.getId();
 	}
 
-	public Person loadPerson(Long id){
+	public Person loadPerson(Long id) {
 
 		return em.find(Person.class, id);
+	}
+
+	public void setName(Long id, String name) {
+
+		em.find(Person.class, id).setFirstName(name);
 	}
 
 }
