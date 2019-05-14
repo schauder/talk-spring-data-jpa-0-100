@@ -15,6 +15,7 @@
  */
 package example.jpa;
 
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
@@ -28,4 +29,11 @@ public interface PersonRepository extends CrudRepository<Person, Long> {
 	List<Person> findByFirstName(String firstName);
 
 	boolean existsByAddress_CityContainsIgnoreCase(String name);
+
+
+	@Query("SELECT CONCAT( p.firstName, '\n', a.zipCode, ' ', a.city) " +
+			"FROM Person p " +
+			"JOIN p.address AS a " +
+			"WHERE a.city LIKE :#{#city == null || #city.isEmpty() ? '%' : #city}")
+	List<String> addressListByNullableCity(String city);
 }

@@ -15,12 +15,15 @@
  */
 package example.jpa;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 import static example.jpa.PersonTestUtil.*;
 import static org.assertj.core.api.Assertions.*;
@@ -36,17 +39,22 @@ public class PersonRepositoryIntegrationTests {
 	@Autowired
 	PersonRepository persons;
 
+	Person p = null;
+
+	@Before
+	public void before() {
+		 p = persons.save(createPerson());
+	}
+
 
 	@Test
 	public void crud() {
 
-		Person p = persons.save(createPerson());
 
 		assertThat(persons.findAll())
 				.containsExactly(p);
 
 		persons.deleteAll();
-
 
 		assertThat(persons.findAll())
 				.hasSize(0);
@@ -56,19 +64,24 @@ public class PersonRepositoryIntegrationTests {
 	@Test
 	public void derivedQueriesSimple() {
 
-		Person p = persons.save(createPerson());
-
 		assertThat(persons.findByFirstName("Jens"))
 				.containsExactly(p);
 
 	}
+
 	@Test
 	public void derivedQueriesInvolved() {
-
-		Person p = persons.save(createPerson());
 
 		assertThat(persons.existsByAddress_CityContainsIgnoreCase("nschw"))
 				.isTrue();
 
+	}
+
+	@Test
+	public void queryAnnotation() {
+
+		assertThat(persons.addressListByNullableCity(null)).containsExactly("Jens\n38116 Braunschweig");
+		assertThat(persons.addressListByNullableCity("")).containsExactly("Jens\n38116 Braunschweig");
+		assertThat(persons.addressListByNullableCity("New York")).isEmpty();
 	}
 }
