@@ -36,14 +36,20 @@ import java.util.Set;
 @Entity
 public class Person {
 
-	Person() { }
+	Person() {
+	}
 
 	Person(String firstName, Address address, Gender gender, Collection<Hobby> hobbies) {
 
 		this.firstName = firstName;
 		this.address = address;
 		this.gender = gender;
-		this.hobbies.addAll(hobbies);
+
+		if (hobbies == null) {
+			hobbies = null;
+		} else {
+			this.hobbies.addAll(hobbies);
+		}
 	}
 
 	@Id

@@ -20,6 +20,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -83,5 +85,24 @@ public class PersonRepositoryIntegrationTests {
 		assertThat(persons.addressListByNullableCity(null)).containsExactly("Jens\n38116 Braunschweig");
 		assertThat(persons.addressListByNullableCity("")).containsExactly("Jens\n38116 Braunschweig");
 		assertThat(persons.addressListByNullableCity("New York")).isEmpty();
+	}
+
+	@Test
+	public void queryByExample(){
+
+		Person pattern = new Person(null, new Address(null, null, "germany"), Gender.MALE, null);
+
+		Example<Person> strict = Example.of(pattern);
+
+		assertThat(persons.findAll(strict))
+				.isEmpty();
+
+
+		Example<Person> lenient = Example.of(pattern, ExampleMatcher.matchingAll().withIgnoreCase());
+
+		assertThat(persons.findAll(lenient))
+				.extracting("firstName")
+				.containsExactly("Jens");
+
 	}
 }
