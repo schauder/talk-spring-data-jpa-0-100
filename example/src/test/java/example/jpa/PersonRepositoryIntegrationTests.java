@@ -22,10 +22,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 import static example.jpa.PersonTestUtil.*;
 import static org.assertj.core.api.Assertions.*;
@@ -45,7 +44,7 @@ public class PersonRepositoryIntegrationTests {
 
 	@Before
 	public void before() {
-		 p = persons.save(createPerson());
+		p = persons.save(createPerson());
 	}
 
 
@@ -88,7 +87,7 @@ public class PersonRepositoryIntegrationTests {
 	}
 
 	@Test
-	public void queryByExample(){
+	public void queryByExample() {
 
 		Person pattern = new Person(null, new Address(null, null, "germany"), Gender.MALE, null);
 
@@ -104,5 +103,30 @@ public class PersonRepositoryIntegrationTests {
 				.extracting("firstName")
 				.containsExactly("Jens");
 
+	}
+
+	@Test
+	public void queryBySpecification() {
+
+		assertThat(
+				persons.findAll(notFrom("new"))
+		).extracting("firstName")
+				.containsExactly("Jens");
+
+
+		assertThat(
+				persons.findAll(notFrom("schweig"))
+		).isEmpty();
+	}
+
+	private Specification<Person> notFrom(String cityPart) {
+
+		return (Specification<Person>) (root, cq, cb) ->
+				cb.not(
+						cb.like(
+								root.get("address").get("city"),
+								"%" + cityPart + "%"
+						)
+				);
 	}
 }
