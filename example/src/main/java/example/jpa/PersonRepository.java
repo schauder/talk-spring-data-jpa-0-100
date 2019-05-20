@@ -37,4 +37,8 @@ public interface PersonRepository extends JpaRepository<Person, Long>, JpaSpecif
 			"JOIN p.address AS a " +
 			"WHERE a.city LIKE :#{#city == null || #city.isEmpty() ? '%' : #city}")
 	List<String> addressListByNullableCity(String city);
+
+
+	List<SimplePerson> findSimplyByFirstName(String firstName);
+
 }

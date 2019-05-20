@@ -71,6 +71,15 @@ public class PersonRepositoryIntegrationTests {
 	}
 
 	@Test
+	public void derivedQueryWithProjection() {
+
+		assertThat(persons.findSimplyByFirstName("Jens"))
+				.extracting("address")
+				.containsExactly("Braunschweig in Germany");
+
+	}
+
+	@Test
 	public void derivedQueriesInvolved() {
 
 		assertThat(persons.existsByAddress_CityContainsIgnoreCase("nschw"))
