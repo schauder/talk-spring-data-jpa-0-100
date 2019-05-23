@@ -26,6 +26,10 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
+
 import static example.jpa.PersonTestUtil.*;
 import static org.assertj.core.api.Assertions.*;
 
@@ -130,7 +134,7 @@ public class PersonRepositoryIntegrationTests {
 
 	private Specification<Person> notFrom(String cityPart) {
 
-		return (Specification<Person>) (root, cq, cb) ->
+		return (Specification<Person>) (Root<Person> root, CriteriaQuery<?> cq, CriteriaBuilder cb) ->
 				cb.not(
 						cb.like(
 								root.get("address").get("city"),
