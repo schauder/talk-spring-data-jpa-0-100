@@ -37,6 +37,8 @@ public class PersonIntegrationTests {
 
 		Person reloaded = em.find(Person.class, p.getId());
 
+		assertPersonCount().isEqualTo(0);
+
 		assertThat(reloaded).isNotNull();
 		assertThat(reloaded.getId()).isEqualTo(p.getId());
 
